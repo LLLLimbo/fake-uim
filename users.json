@@ -1,0 +1,30 @@
+[
+  {
+    "phone": "17016184641",
+    "password": "pwd",
+    "uid": "00000001",
+    "tid": "A001",
+    "name": "admin",
+    "authorizedPids": [
+      "P01",
+      "P02"
+    ],
+    "resources": [
+      "/"
+    ]
+  },
+  {
+    "phone": "17682453214",
+    "password": "pwd",
+    "uid": "00000002",
+    "tid": "A001",
+    "name": "tommy",
+    "authorizedPids": [
+      "P01"
+    ],
+    "resources": [
+      "/device/admin/",
+      "/uim/account/"
+    ]
+  }
+]
