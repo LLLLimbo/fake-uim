@@ -3,6 +3,7 @@ package main
 import (
 	"fake-uim/entity"
 	"fake-uim/settings"
+	"fake-uim/util"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	jsoniter "github.com/json-iterator/go"
@@ -60,8 +61,10 @@ func main() {
 
 	r.POST("/uim/auth", func(c *gin.Context) {
 		sessionKey := c.GetHeader("SEEINER-SEC-TOKEN")
-		//Added by APISIX proxy-rewrite plugin
+		//Can be added by APISIX proxy-rewrite plugin or NGINX
 		prs := c.GetHeader("X-PROTECTED-RESOURCE")
+		//Project id
+		project := c.GetHeader("X-REQUEST-PROJECT")
 
 		if sessionKey == "" {
 			c.JSON(401, gin.H{"message": "You are not authorized. Please login first!"})
@@ -87,6 +90,11 @@ func main() {
 
 		if len(scanRes) < 1 {
 			c.JSON(403, gin.H{"message": "You are not allowed to access this resource !"})
+			return
+		}
+
+		if !util.Contains(session.AuthorizedPids, project) {
+			c.JSON(403, gin.H{"message": "You are not allowed to access this resource of target project!"})
 			return
 		}
 
